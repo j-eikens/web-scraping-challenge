@@ -148,5 +148,5 @@ def scrape():
     mars_dict.append(html_table_dictionary)
 
 
-    return mars_dict
-    #return print(f' here are the results')
+    return featured_image_url_dict
+    #return mars_dict
