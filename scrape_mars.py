@@ -5,7 +5,6 @@ import requests
 import pandas as pd
 
 def scrape():
-
     #scraping news_title and news_p
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
@@ -16,33 +15,11 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
 
-    articles = soup.find_all('div', class_='content_title')
-    teaser = soup.find_all('div', class_='article_teaser_body')
-
-    news_title = []
-    news_p = []
-
-    for i in articles:
-        
-        title = i.text
-        news_title.append(title)
-        
-    for i in teaser:
-        
-        teaser_element = i.text
-        news_p.append(teaser_element)
-        
+    news_title = articles = soup.find_all('div', class_='content_title')[0].text
+    news_p = soup.find_all('div', class_='article_teaser_body')[0].text
+    
     browser.quit()
 
-    #create results dictionary
-    news_paragraph_dict = []
-
-    for i in range(len(news_p)):
-        dict = {'news_title': news_title[i], 'news_p':news_p[i]}
-        
-        news_paragraph_dict.append(dict)
-
-    ######################
     #scrapping featured image
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
@@ -55,29 +32,18 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
 
-    image = soup.find_all('img', class_='fancybox-image')
-
-    for i in image:
-        featured_image = i['src']
+    image = soup.find_all('img', class_='fancybox-image')[0]['src']
         
-    featured_image_url = f'{url}{featured_image}'
+    featured_image_url = f'{url}{image}'
 
     browser.quit()
 
-    #creating results dictionary
-    featured_image_url_dict = {'featured_image_url': featured_image_url}
-
-    #########
     #scrapping Mars facts
     url = 'https://galaxyfacts-mars.com/'
     tables = pd.read_html(url)
     mars_table = tables[1]
     html_table = mars_table.to_html()
 
-    #results dictionary
-    html_table_dictionary = {'html_table': html_table}
-
-    #########
     #scrapping Mars Hemispheres
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
@@ -129,25 +95,12 @@ def scrape():
     
     browser.quit()
 
-    #creating dictionary of results
-    hemisphere_image_urls = []
-
-    for i in range(len(title_list)):
-        dict = {'title': title_list[i], 'img_url':image_url_list[i]}
-        
-        hemisphere_image_urls.append(dict)
-
-
-    #########
-    #creating composite results dictionary
-    mars_dict = []
-
-    mars_dict = hemisphere_image_urls
-    mars_dict.extend(news_paragraph_dict)
-    mars_dict.append(featured_image_url_dict)
-    mars_dict.append(html_table_dictionary)
-
-
-    #return featured_image_url_dict
-    #return hemisphere_image_urls
+    #### creating final dictionary
+    mars_dict = {}
+    mars_dict['news_title'] = news_title
+    mars_dict['news_p'] = news_p
+    mars_dict['featured_img_url'] = featured_image_url
+    mars_dict['hemisphere_img_url'] = hemisphere_image_urls
+    mars_dict['table'] = html_table
+    
     return mars_dict
