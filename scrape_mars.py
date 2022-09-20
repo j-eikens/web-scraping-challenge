@@ -148,5 +148,6 @@ def scrape():
     mars_dict.append(html_table_dictionary)
 
 
-    return featured_image_url_dict
-    #return mars_dict
+    #return featured_image_url_dict
+    #return hemisphere_image_urls
+    return mars_dict

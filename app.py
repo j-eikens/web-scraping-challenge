@@ -22,6 +22,7 @@ def scraper():
     mars_scrape_data = scrape_mars.scrape()
 
     mars.update_one({}, {"$set": mars_scrape_data}, upsert=True)
+    #mars.insert_many({'i': i} for i in range(len(mars_scrape_data)))
 
     return redirect("/", code=302)  
 
