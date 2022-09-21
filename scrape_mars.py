@@ -44,7 +44,7 @@ def scrape():
     mars_table = tables[0]
     mars_table = mars_table.rename({0: "Description", 1:"Mars", 2:"Earth" }, axis='columns')
     mars_table = mars_table.set_index('Description')
-    html_table = mars_table.to_html()
+    html_table = mars_table.to_html(justify='left', classes="table table-bordered")
 
     #scrapping Mars Hemispheres
     executable_path = {'executable_path': ChromeDriverManager().install()}
