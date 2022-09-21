@@ -41,7 +41,9 @@ def scrape():
     #scrapping Mars facts
     url = 'https://galaxyfacts-mars.com/'
     tables = pd.read_html(url)
-    mars_table = tables[1]
+    mars_table = tables[0]
+    mars_table = mars_table.rename({0: "Description", 1:"Mars", 2:"Earth" }, axis='columns')
+    mars_table = mars_table.set_index('Description')
     html_table = mars_table.to_html()
 
     #scrapping Mars Hemispheres
