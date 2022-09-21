@@ -95,6 +95,13 @@ def scrape():
     
     browser.quit()
 
+    hemisphere_image_urls = []
+
+    for i in range(len(title_list)):
+        dict = {'title': title_list[i], 'img_url':image_url_list[i]}
+            
+        hemisphere_image_urls.append(dict)
+
     #### creating final dictionary
     mars_dict = {}
     mars_dict['news_title'] = news_title
