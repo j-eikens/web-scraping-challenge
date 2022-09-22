@@ -1,5 +1,5 @@
 # web-scraping-challenge
-A webpage powered by Flask was created by scraping various website for mars facts and images and uploading the scrapped info to MongoDB. 
+A webpage powered by Flask was created using facts and images aquired by scraping various websites. 
 
 ## Uploaded Files
 * app.py - Flask application
